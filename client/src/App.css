@@ -5,3 +5,8 @@ body {
   display: block;
   font-size: 3rem;
 }
+
+.form-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
