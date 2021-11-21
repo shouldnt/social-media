@@ -4,7 +4,7 @@ import jwtDecode from 'jwt-decode';
 const saveTokenToLocal = (token) => {
   window.localStorage.setItem('jwtToken', token || '');
 }
-const getTokenFromLocal = () => {
+export const getTokenFromLocal = () => {
   return window.localStorage.getItem('jwtToken') || '';
 }
 const removeTokenFromLocal = () => {
