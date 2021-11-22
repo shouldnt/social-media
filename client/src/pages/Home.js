@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { Grid, Image } from 'semantic-ui-react'
+import { Grid, Image, Transition } from 'semantic-ui-react'
 import { useQuery } from '@apollo/react-hooks';
 
 import PostCard from '../components/PostCard';
@@ -23,13 +23,17 @@ const Home = () => {
             <PostForm/>
           </Grid.Column>
         )}
-        {loading ? (<h1>loading posts...</h1>) : posts.map((post, index) => {
-          return (
-            <Grid.Column key={index}>
-              <PostCard post={post}></PostCard>
-            </Grid.Column>
-          )
-        })}
+        {loading ? (<h1>loading posts...</h1>) : (
+          <Transition.Group>
+            {posts.map((post, index) => {
+              return (
+                <Grid.Column key={index}>
+                  <PostCard post={post}></PostCard>
+                </Grid.Column>
+              )
+            })}
+          </Transition.Group>
+        )}
       </Grid.Row>
     </Grid>
   )

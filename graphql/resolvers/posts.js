@@ -69,9 +69,9 @@ module.exports = {
       try {
         const post = await Post.findById(postId);
         if(post) {
-          const postAlreadyLiked = post.likes.find(like => like.username);
+          const postAlreadyLiked = post.likes.find(like => like.username === user.username);
           if(postAlreadyLiked) {
-            post.likes = post.likes.filter(like => like.username === user.username);
+            post.likes = post.likes.filter(like => like.username !== user.username);
           } else {
             post.likes.push({ username: user.username, createdAt: new Date().toISOString() });
           }
@@ -80,6 +80,14 @@ module.exports = {
         } else {
           throw new UserInputError("Post not found");
         }
+      } catch(error) {
+        throw new Error(error);
+      }
+    },
+    async deleteAllPost(_, __) {
+      try {
+        await Post.deleteMany({});
+        return "deleted all posts successfully";
       } catch(error) {
         throw new Error(error);
       }
