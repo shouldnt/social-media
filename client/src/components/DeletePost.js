@@ -27,7 +27,7 @@ const DeletePost = ({post, onDeleteSuccess}) => {
       }
     }
   });
-  if(post.username !== user.username) {
+  if(!user || post.username !== user.username) {
     return null;
   }
   return (
