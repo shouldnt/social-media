@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
 import { Grid, Image, Transition } from 'semantic-ui-react'
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 
 import PostCard from '../components/PostCard';
 import PostForm from '../components/PostForm';

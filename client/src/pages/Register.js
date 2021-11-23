@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 
 import { AuthContext } from '../context/authContext';
 import { Form, Button } from 'semantic-ui-react';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from '../utils/hooks';
 
