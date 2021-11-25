@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext} from 'react';
-import { AuthContext } from '../context/authContext';
 import { Link } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 import { useLocation, useNavigate } from 'react-router-dom';
+
+import HeaderAvatar from '../components/HeaderAvatar';
+import { AuthContext } from '../context/authContext';
 
 const items = {
   home: 'home',
@@ -21,51 +23,46 @@ const MenuBar = () => {
   useEffect(() => {
     setActiveItem(getCurrentItem());
   }, [location]);
-  if(user) {
-    return (
-      <Menu pointing secondary size="massive" color="teal">
-        <Menu.Item
-          name={user.username}
-          active
-          as={Link}
-          to="/"
-        />
-        <Menu.Menu position='right'>
-          <Menu.Item
-            name="logout"
-            active={activeItem === items.register}
-            onClick={(e) => {
-              logout();
-              navigate('/');
-            }}
-          />
-        </Menu.Menu>
-      </Menu>
-    )
-  }
   return (
-    <Menu pointing secondary size="massive" color="teal">
-      <Menu.Item
-        name={items.home}
-        active={activeItem === items.home}
-        as={Link}
-        to="/"
-      />
-      <Menu.Menu position='right'>
-        <Menu.Item
-          name={items.login}
-          active={activeItem === items.login}
-          as={Link}
-          to="/login"
-        />
-        <Menu.Item
-          name={items.register}
-          active={activeItem === items.register}
-          as={Link}
-          to="/register"
-        />
-      </Menu.Menu>
-    </Menu>
+    <>
+      <div className="page-header py-5 border-b border-gray-100 relative z-10">
+        <div class="container mx-auto">
+          <div className="flex justify-between items-center">
+            <div>
+              <Link to="/"
+                className={`block py-2 px-3 rounded-lg border ${activeItem === items.home ? 'border-blue-100 bg-blue-100' : ''} text-blue-500 hover:bg-blue-100`}
+              >
+                <i className="ri-home-heart-line text-2xl"></i>
+              </Link>
+            </div>
+            <div class="header__navigation-item flex items-center">
+              {user ? (
+                <HeaderAvatar/>
+              ) : (
+                <>
+                  {activeItem !== items.login && (
+                    <Link to="/login"
+                      className="py-2 px-3 border border-gray-100 rounded-lg flex items-center text-blue-500 mr-2 hover:bg-blue-100"
+                    >
+                      <i className="ri-login-box-line mr-2"></i>
+                      Login
+                    </Link>
+                  )}
+                  {activeItem !== items.register && (
+                    <Link to="/register"
+                      className="py-2 px-3 border border-gray-100 rounded-lg flex items-center text-blue-500 mr-2 hover:bg-blue-100"
+                    >
+                      <i className="ri-edit-2-line mr-2"></i>
+                      Register
+                    </Link>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   )
 }
 export default MenuBar;

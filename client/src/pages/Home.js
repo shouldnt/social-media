@@ -13,29 +13,33 @@ const Home = () => {
   const { user } = useContext(AuthContext);
   const { getPosts: posts } = data || { getPosts: [] };
   return (
-    <Grid columns={3}>
-      <Grid.Row className="page-title">
-        <h1>Recents Posts</h1>
-      </Grid.Row>
-      <Grid.Row>
-        {user && (
+    <div class="container mx-auto">
+      <Grid columns={3}>
+        <Grid.Row className="page-title">
           <Grid.Column>
-            <PostForm/>
+            <h1>Recents Posts</h1>
           </Grid.Column>
-        )}
-        {loading ? (<h1>loading posts...</h1>) : (
-          <Transition.Group>
-            {posts.map((post, index) => {
-              return (
-                <Grid.Column key={index}>
-                  <PostCard post={post}></PostCard>
-                </Grid.Column>
-              )
-            })}
-          </Transition.Group>
-        )}
-      </Grid.Row>
-    </Grid>
+        </Grid.Row>
+        <Grid.Row>
+          {user && (
+            <Grid.Column>
+              <PostForm/>
+            </Grid.Column>
+          )}
+          {loading ? (<h1>loading posts...</h1>) : (
+            <Transition.Group>
+              {posts.map((post, index) => {
+                return (
+                  <Grid.Column key={index}>
+                    <PostCard post={post}></PostCard>
+                  </Grid.Column>
+                )
+              })}
+            </Transition.Group>
+          )}
+        </Grid.Row>
+      </Grid>
+    </div>
   )
 }
 export default Home;

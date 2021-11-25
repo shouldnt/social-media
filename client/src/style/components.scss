@@ -1,0 +1,31 @@
+.header__navigation-avatar {
+  position: relative;
+  .navigation-img {
+    --imgSize: 40px;
+    display: block;
+    position: relative;
+    width: var(--imgSize);
+    height: var(--imgSize);
+    img {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+  .navigation-items {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 1rem;
+
+  }
+  .navigation-item {
+
+  }
+}
+
