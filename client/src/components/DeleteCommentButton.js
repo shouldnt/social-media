@@ -4,36 +4,42 @@ import { gql, useMutation } from '@apollo/client';
 import { Button, Confirm, Icon, Popup } from 'semantic-ui-react';
 
 import { AuthContext } from '../context/authContext';
-import { FETCH_POSTS_QUERY } from '../utils/graphql'
+import { GET_POST_QUERY } from '../utils/graphql'
 
-const DeletePost = ({post, onDeleteSuccess}) => {
+const DeleteCommentButton = ({postId, commentId, onDeleteSuccess}) => {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const { user } = useContext(AuthContext);
-  const [deletePost] = useMutation(DELETE_POST_MUTATION, {
-    variables: { postId: post.id },
+  const [deleteComment] = useMutation(DELETE_COMMENT_MUTATION, {
+    variables: { postId, commentId },
     update(cache, ) {
       setConfirmOpen(false);
-
       const data = cache.readQuery({
-        query: FETCH_POSTS_QUERY,
+        variables: { postId },
+        query: GET_POST_QUERY,
       })
       const newData = {
-        getPosts: data.getPosts.filter(_post => _post.id !== post.id)
+        getPost: {
+          ...data.getPost,
+          comments: data.getPost.comments.filter(comment => comment.id !== commentId)
+        }
       }
-      cache.writeQuery({ query: FETCH_POSTS_QUERY, data: newData });
+      console.log(newData);
+      cache.writeQuery({
+        variables: { postId },
+        query: GET_POST_QUERY,
+        data: newData
+      });
 
       if(onDeleteSuccess) {
         onDeleteSuccess();
       }
     }
   });
-  if(!user || post.username !== user.username) {
-    return null;
-  }
   return (
     <>
+
       <Popup
-        content="Delete post"
+        content="Delete comment"
         trigger={(
           <Button
             float="right"
@@ -48,7 +54,7 @@ const DeletePost = ({post, onDeleteSuccess}) => {
       <Confirm
         open={confirmOpen}
         onClose={() => setConfirmOpen(false)} onConfirm={() => {
-          deletePost();
+          deleteComment();
         }}
         onCancel={() => setConfirmOpen(false)}
       />
@@ -56,10 +62,10 @@ const DeletePost = ({post, onDeleteSuccess}) => {
   )
 }
 
-const DELETE_POST_MUTATION = gql`
-  mutation deletePost($postId: ID!) {
-    deletePost(postId: $postId)
+const DELETE_COMMENT_MUTATION = gql`
+  mutation DeleteComment($postId: String!, $commentId: String!) {
+    deleteComment(postId: $postId, commentId: $commentId)
   }
 `
 
-export default DeletePost;
+export default DeleteCommentButton;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Button, Label, Icon } from 'semantic-ui-react';
+import { Button, Label, Icon, Popup } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
@@ -17,26 +17,31 @@ const LikeButton = ({post, user}) => {
     userLikedThePost(user, post.likes) ? setLike(true) : setLike(false);
   }, [post, user])
   return (
-    <Button as='div' labelPosition='right'>
-      {user ?
-          like ? (
-            <Button color='teal' onClick={likePost}>
-              <Icon name='heart' />
-            </Button>
-          ) : (
-            <Button color='teal' basic onClick={likePost}>
-              <Icon name='heart' />
-            </Button>
-          )
-      : (
-        <Button as={Link} to="/login" color='teal' basic>
-          <Icon name='heart' />
+    <Popup
+      content={`${like ? 'UnLike' : 'Like'} post`}
+      trigger={(
+        <Button as='div' labelPosition='right'>
+          {user ?
+              like ? (
+                <Button color='teal' onClick={likePost}>
+                  <Icon name='heart' />
+                </Button>
+              ) : (
+                <Button color='teal' basic onClick={likePost}>
+                  <Icon name='heart' />
+                </Button>
+              )
+              : (
+                <Button as={Link} to="/login" color='teal' basic>
+                  <Icon name='heart' />
+                </Button>
+              )}
+          <Label as='div' basic color='teal' pointing='left'>
+            {post.likeCount}
+          </Label>
         </Button>
       )}
-      <Label as='div' basic color='teal' pointing='left'>
-        {post.likeCount}
-      </Label>
-    </Button>
+    />
   )
 }
 

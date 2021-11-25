@@ -5,9 +5,12 @@ import { Grid, Card, Image, Button, Icon, Label } from 'semantic-ui-react';
 import { gql, useQuery } from '@apollo/client';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import LikeButton from '../components/LikeButton';
+import CommentForm from '../components/CommentForm';
+import DeleteCommentButton from '../components/DeleteCommentButton.js';
 import DeletePost from '../components/DeletePost';
+import LikeButton from '../components/LikeButton';
 import { AuthContext } from '../context/authContext';
+import { GET_POST_QUERY } from '../utils/graphql';
 
 const SinglePost = () => {
   const navigate = useNavigate();
@@ -57,34 +60,30 @@ const SinglePost = () => {
               }}/>
             </Card.Content>
           </Card>
+          <Card fluid>
+            <Card.Content>
+              <CommentForm postId={post.id} />
+            </Card.Content>
+          </Card>
+          {post.comments.map(comment => {
+            return (
+              <Card fluid>
+                { user && user.username === comment.username && (
+                  <DeleteCommentButton postId={post.id} commentId={comment.id} />
+                ) }
+                <Card.Content>
+                  <Card.Header>{comment.username}</Card.Header>
+                  <Card.Meta>{moment(comment.createdAt).fromNow()}</Card.Meta>
+                  <Card.Description>{comment.body}</Card.Description>
+                </Card.Content>
+              </Card>
+            )
+          })}
         </Grid.Column>
       </Grid.Row>
     </Grid>
   )
 }
 
-const GET_POST_QUERY = gql`
-  query getPost($postId: ID!) {
-    getPost(postId: $postId) {
-      comments {
-        id
-        createdAt
-        username
-        body
-      }
-      id
-      body
-      createdAt
-      username
-      likeCount
-      commentCount
-      likes {
-        id
-        createdAt
-        username
-      }
-    }
-  }
-`
 
 export default SinglePost;
