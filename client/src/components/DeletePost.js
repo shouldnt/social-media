@@ -32,19 +32,18 @@ const DeletePost = ({post, onDeleteSuccess}) => {
   }
   return (
     <>
-      <Popup
-        content="Delete post"
-        trigger={(
-          <Button
-            float="right"
-            as='div'
-            color="red"
-            onClick={() => setConfirmOpen(true)}
-          >
-            <Icon name='trash' style={{margin: 0}}/>
-          </Button>
-        )}
-      />
+      <li className="flex items-center group cursor-pointer"
+        onClick={() => setConfirmOpen(true)}
+      >
+        <div
+          className="rounded-full flex items-center justify-center border border-red-500 group-hover:bg-red-500"
+          style={{width: 30, height: 30}}
+        >
+          <i
+            className="ri-delete-bin-5-line text-red-500 group-hover:text-white"
+          ></i>
+        </div>
+      </li>
       <Confirm
         open={confirmOpen}
         onClose={() => setConfirmOpen(false)} onConfirm={() => {

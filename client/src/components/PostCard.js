@@ -16,40 +16,45 @@ const PostCard = ({post}) => {
 
   }
   return (
-    <Card style={{ marginBottom: '1rem' }} fluid>
-      <Card.Content>
-        <Image
-          floated='right'
-          size='mini'
-          src='https://react.semantic-ui.com/images/avatar/large/molly.png'
-        />
-        <Card.Header>{username}</Card.Header>
-        <Card.Meta as={Link} to={`/posts/${id}`}>{moment(createdAt).fromNow()}</Card.Meta>
-        <Card.Description>
+    <>
+      <article className="post-card rounded-lg border border-blue-100 p-5 shadow-lg">
+        <header className="card__header flex items-center mb-3">
+          <div className="mr-3 rounded-md overflow-hidden">
+            <img
+              style={{width: 50, height: 50, display: 'block'}}
+              src='https://react.semantic-ui.com/images/avatar/large/molly.png'
+            />
+          </div>
+          <div>
+            <h3 className="font-bold text-lg">{username}</h3>
+            <Link
+              to={`/posts/${id}`}
+              className="text-gray-500 font-light"
+            >{moment(createdAt).fromNow()}</Link>
+          </div>
+        </header>
+        <div className="text-normal text-lg">
           {body}
-        </Card.Description>
-      </Card.Content>
-      <Card.Content extra>
-        <LikeButton post={{id, likes, likeCount}} user={user}></LikeButton>
-        <Popup
-          inverted
-          content="Comment on post"
-          trigger={(
-            <Button as={Link} to={`/posts/${post.id}`} labelPosition='right'>
-              <Button color='teal' basic>
-                <Icon name='comments' />
-              </Button>
-              <Label as='div' basic color='teal' pointing='left'>
-                {commentCount}
-              </Label>
-            </Button>
-          )}
-        />
-        { user && user.username === username && (
-          <DeletePost post={{id: post.id, username: post.username}} />
-        ) }
-      </Card.Content>
-    </Card>
+        </div>
+        <div className="pb-6"></div>
+        <footer className="flex justify-between items-center">
+          <ul className="flex items-center gap-5">
+            <LikeButton post={{id, likes, likeCount}} user={user}></LikeButton>
+            <Link to={`/posts/${id}`}>
+              <li className="flex items-center gap-2 cursor-pointer">
+                <div className="rounded-full flex items-center justify-center border border-blue-300" style={{width: 30, height: 30}}>
+                  <i className="ri-chat-3-line text-blue-300"></i>
+                </div>
+                <div>{commentCount || 0}</div>
+              </li>
+            </Link>
+          </ul>
+          { user && user.username === username && (
+            <DeletePost post={{id: post.id, username: post.username}} />
+          ) }
+        </footer>
+      </article>
+    </>
   )
 }
 

@@ -16,6 +16,40 @@ const LikeButton = ({post, user}) => {
   useEffect(() => {
     userLikedThePost(user, post.likes) ? setLike(true) : setLike(false);
   }, [post, user])
+  const heart = (liked) => {
+    return liked ? (
+      <i className="ri-heart-fill text-red-400"></i>
+    ) : (
+      <i className="ri-heart-line text-red-300"></i>
+    )
+  }
+  if(!user) {
+    return (
+      <Link to='/login'>
+        <li className="flex items-center gap-2">
+          <div
+            className="rounded-full flex items-center justify-center border border-red-300 hover:border-red-500 cursor-pointer"
+            style={{width: 30, height: 30}}
+          >
+            {heart(like)}
+          </div>
+          <div>{post.likeCount || 0}</div>
+        </li>
+      </Link>
+    )
+  }
+  return (
+    <li className="flex items-center gap-2">
+      <div
+        className={`rounded-full flex items-center justify-center border border-red-300 hover:border-red-500 cursor-pointer ${like ? "bg-red-200" : ''}`}
+        style={{width: 30, height: 30}}
+        onClick={likePost}
+      >
+        {heart(like)}
+      </div>
+      <div>{post.likeCount || 0}</div>
+    </li>
+  )
   return (
     <Popup
       content={`${like ? 'UnLike' : 'Like'} post`}
