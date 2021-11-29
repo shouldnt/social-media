@@ -10,6 +10,12 @@ export const getTokenFromLocal = () => {
 const removeTokenFromLocal = () => {
   window.localStorage.removeItem('jwtToken');
 }
+const saveAvatarToLocal = (fileName) => {
+  window.localStorage.setItem('avatar', fileName);
+}
+const getAvatarfromLocal = () => {
+  return window.localStorage.getItem('avatar') || '';
+}
 const initialState = {
   user: null
 }
@@ -23,6 +29,7 @@ if(getTokenFromLocal()) {
       email: decodedToken.email,
       token: getTokenFromLocal(),
     };
+    initialState.avatar = getAvatarfromLocal();
   }
 }
 
@@ -46,6 +53,12 @@ function authReducer(state, action) {
         user: null
       }
     }
+    case "SET_AVATAR": {
+      return {
+        ...state,
+        avatar: action.payload
+      }
+    }
     default:
       return state;
   }
@@ -61,13 +74,19 @@ function AuthProvider(props) {
     removeTokenFromLocal();
     dispatch({type: 'LOGOUT' });
   }
+  const setAvatar = (imgLink) => {
+    saveAvatarToLocal(imgLink);
+    dispatch({type: 'SET_AVATAR', payload: imgLink});
+  }
 
   return (
     <AuthContext.Provider
       value={{
         user: state.user,
+        avatar: state.avatar,
         login,
-        logout
+        logout,
+        setAvatar
       }}
       { ...props }
     />

@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@apollo/client@^3.4.17":
+"@apollo/client@^3.0.0", "@apollo/client@^3.4.17":
   "integrity" "sha512-MDt2rwMX1GqodiVEKJqmDmAz8xr0qJmq5PdWeIt0yDaT4GOkKYWZiWkyfhfv3raTk8PyJvbsNG9q2CqmUrlGfg=="
   "resolved" "https://registry.npmjs.org/@apollo/client/-/client-3.4.17.tgz"
   "version" "3.4.17"
@@ -2498,6 +2498,13 @@
   dependencies:
     "normalize-path" "^3.0.0"
     "picomatch" "^2.0.4"
+
+"apollo-upload-client@^16.0.0":
+  "integrity" "sha512-aLhYucyA0T8aBEQ5g+p13qnR9RUyL8xqb8FSZ7e/Kw2KUOsotLUlFluLobqaE7JSUFwc6sKfXIcwB7y4yEjbZg=="
+  "resolved" "https://registry.npmjs.org/apollo-upload-client/-/apollo-upload-client-16.0.0.tgz"
+  "version" "16.0.0"
+  dependencies:
+    "extract-files" "^11.0.0"
 
 "aproba@^1.0.3", "aproba@^1.1.1":
   "integrity" "sha512-Y9J6ZjXtoYh8RnXVCMOU/ttDmk1aBjunq9vO0ta5x85WDQiQfUF9sIPBITdbiiIVcBo03Hi3jMxigBtsddlXRw=="
@@ -5319,6 +5326,11 @@
     "snapdragon" "^0.8.1"
     "to-regex" "^3.0.1"
 
+"extract-files@^11.0.0":
+  "integrity" "sha512-FuoE1qtbJ4bBVvv94CC7s0oTnKUGvQs+Rjf1L2SJFfS+HTVVjhPFtehPdQ0JiGPqVNfSSZvL5yzHHQq2Z4WNhQ=="
+  "resolved" "https://registry.npmjs.org/extract-files/-/extract-files-11.0.0.tgz"
+  "version" "11.0.0"
+
 "extsprintf@^1.2.0":
   "integrity" "sha1-4mifjzVvrWLMplo6kcXfX5VRaS8="
   "resolved" "https://registry.npmjs.org/extsprintf/-/extsprintf-1.4.0.tgz"
@@ -5852,7 +5864,7 @@
   dependencies:
     "tslib" "^2.1.0"
 
-"graphql@^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0", "graphql@^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0", "graphql@^14.0.0 || ^15.0.0", "graphql@^15.7.2":
+"graphql@^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0", "graphql@^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0", "graphql@^14.0.0 || ^15.0.0", "graphql@^15.7.2", "graphql@14 - 15":
   "integrity" "sha512-AnnKk7hFQFmU/2I9YSQf3xw44ctnSFCfp3zE0N6W174gqe9fWG/2rKaKxROK7CcI3XtERpjEKFqts8o319Kf7A=="
   "resolved" "https://registry.npmjs.org/graphql/-/graphql-15.7.2.tgz"
   "version" "15.7.2"

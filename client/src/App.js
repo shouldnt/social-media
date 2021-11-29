@@ -7,12 +7,14 @@ import './App.scss';
 
 import { AuthProvider } from './context/authContext';
 import AuthRoute from './utils/AuthRoute';
+import PrivateRoute from './utils/PrivateRoute';
 
 import MenuBar from './components/MenuBar';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import SinglePost from './pages/SinglePost';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -26,12 +28,21 @@ function App() {
               <Login/>
             </AuthRoute>
             } />
-          <Route exact path="/register" element={
-            <AuthRoute>
-              <Register/>
-            </AuthRoute>
-            } />
+          <Route exact path="/register"
+            element={
+              <AuthRoute>
+                <Register/>
+              </AuthRoute>
+            }
+          />
           <Route exact path="/posts/:postId" element={<SinglePost/>} />
+          <Route exact path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile/>
+              </PrivateRoute>
+            }
+          />
         </Routes>
 
       </Router>

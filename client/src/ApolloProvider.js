@@ -9,11 +9,16 @@ import {
   ApolloLink,
   concat
 } from '@apollo/client';
+import { createUploadLink } from 'apollo-upload-client';
 import { getTokenFromLocal } from './context/authContext';
+import appConstants from './appConstants';
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:3000'
+  uri: appConstants.apiHost
 });
+const uploadLink = createUploadLink({
+  uri: appConstants.apiHost
+})
 const authMiddleware = new ApolloLink((operation, forward) => {
   operation.setContext(({ headers = {} }) => {
     const token = getTokenFromLocal();
@@ -27,7 +32,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   return forward(operation);
 })
 const client = new ApolloClient({
-  link: concat(authMiddleware, httpLink),
+  link: concat(authMiddleware, uploadLink, httpLink ),
   cache: new InMemoryCache()
 });
 export default () => (

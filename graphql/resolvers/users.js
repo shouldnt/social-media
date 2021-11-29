@@ -1,5 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const path = require('path');
+const { createWriteStream } = require('fs');
 
 const User = require('../../models/User.js');
 const { SECRET_KEY } = require('../../config.js');
@@ -63,8 +65,27 @@ module.exports = {
       return {
         ...user._doc,
         id: user.id,
+        avatar: user.avatar,
         token
       }
+    },
+    async changeAvatar(parent, { username, file }) {
+      const user = await User.findOne({ username })
+      if(!user) {
+        errors.general = "User not found";
+        throw new UserInputError("User not found", { errors });
+      }
+      const { createReadStream, filename, mimetype, encoding } = await file;
+      const filePath = path.join(__dirname, '../../images', filename);
+      const stream = new Promise((res) => {
+        createReadStream()
+          .pipe(createWriteStream(filePath))
+          .on('close', res);
+      });
+      await stream;
+      user.avatar = filename;
+      user.save();
+      return { filename: '/images/' + filename, mimetype, encoding };
     }
   }
 }
