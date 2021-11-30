@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import classes from 'classnames';
 
@@ -8,6 +8,7 @@ import AvatarUpload from '../components/AvatarUpload';
 const avatarSize = 100;
 const Profile = () => {
   const { user, avatar } = useContext(AuthContext);
+  const [showAvatarUpload, setShowAvatarUpload] = useState(false);
   return (
     <section>
       <div className="pt-10"></div>
@@ -45,35 +46,37 @@ const Profile = () => {
                 )}
               >{user.email}</h2>
             </div>
-            <AvatarUpload>
-              {(selectFile, upload) => (
-                <div
-                  className={classes(
-                    'flex items-center',
-                    'group cursor-pointer'
-                  )}
-                >
-                  <div
-                    className={classes(
-                      'flex justify-center items-center',
-                      'border border-blue-100 rounded-full',
-                      'mr-2',
-                      'group-hover:bg-blue-500',
-                    )}
-                    style={{width: 30, height: 30}}
-                  >
-                    <i className={classes(
-                      'ri-pencil-line text-blue-500',
-                      'group-hover:text-white'
-                    )}></i>
-                  </div>
-                  <div className={classes(
-                    'group-hover:text-blue-500'
-
-                  )}>change avatar</div>
-                </div>
+            {showAvatarUpload && <AvatarUpload onCompleted={() => setShowAvatarUpload(false)} onCloseClick={() => setShowAvatarUpload(false)}/>}
+            <div
+              className={classes(
+                'flex items-center',
+                'group cursor-pointer'
               )}
-            </AvatarUpload>
+              onClick={(_) => {
+                console.log('clicked');
+                setShowAvatarUpload(true);
+              }}
+            >
+              <div
+                className={classes(
+                  'flex justify-center items-center',
+                  'border border-blue-100 rounded-full',
+                  'mr-2',
+                  'group-hover:bg-blue-500',
+                )}
+                style={{width: 30, height: 30}}
+              >
+                <i className={classes(
+                  'ri-pencil-line text-blue-500',
+                  'group-hover:text-white'
+                )}></i>
+              </div>
+              <div className={classes(
+                'group-hover:text-blue-500'
+
+              )}>change avatar</div>
+            </div>
+
           </figcaption>
         </figure>
       </div>
